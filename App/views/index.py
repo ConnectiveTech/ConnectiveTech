@@ -12,7 +12,7 @@ def index_page():
 def init():
     db.drop_all()
     db.create_all()
-    create_user('bob', 'bob@gmail.com', 'bobpass','company','MICROBOB')#Bob is by default a Company Account
+    create_user('bob', 'bob@gmail.com', 'bobpass','company','TRINITECH')#Bob is by default a Company Account
     create_user('rob','rob@gmail.com','robpass','student')#Rob is by default a Student Account
     return jsonify(message='db initialized!')
 
