@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+
+{% block title %}Login/Register - ConnectiveTech🔗{% endblock %}
+{% block page %}ConnectiveTech🔗{% endblock %}
+
+
+{% block content %}
+
+
+<!-- Background Video -->
+<video autoplay muted loop id="background-video">
+    <source src="{{ url_for('static', filename='images/background.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+
+<div class="container" id="container">
+    <!-- Sign up form -->
+    <div class="form-container sign-up-container" id="sign-up">
+        <form action="{{ url_for('auth_views.register') }}" method="POST">
+            <h1>Create Account</h1>
+            <div class="account-type">
+                <p>Are you a:</p>
+                <label>
+                    <input type="radio" id="student" name="accountType" value="student" checked>
+                    <span>Student</span>
+                </label>
+                <label>
+                    <input type="radio" id="company" name="accountType" value="company">
+                    <span>Company</span>
+                </label>
+            </div>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div id="companyNameField" style="display: none;">
+                <input type="text" id="companyName" name="companyName" placeholder="Company Name">
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+   
+    <!-- Sign in form -->
+    <div class="form-container sign-in-container" id="sign-in">
+        <form action="{{ url_for('auth_views.login_action') }}" method="POST">
+            <h1>Sign in</h1>
+            <input type="text" name="username" placeholder="Username or Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <a href="#">Forgot your password?</a>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    // JavaScript to toggle the visibility of the Company Name field
+    document.addEventListener('DOMContentLoaded', function() {
+        const accountTypeRadios = document.querySelectorAll('input[name="accountType"]');
+        const companyNameField = document.getElementById('companyNameField');
+
+
+        function toggleCompanyNameField() {
+            companyNameField.style.display = document.getElementById('company').checked ? 'block' : 'none';
+        }
+
+
+        accountTypeRadios.forEach(function(radio) {
+            radio.addEventListener('change', toggleCompanyNameField);
+        });
+
+
+        toggleCompanyNameField(); // Call on initial load
+    });
+</script>
+{% endblock %}
+
+
+
+
+
