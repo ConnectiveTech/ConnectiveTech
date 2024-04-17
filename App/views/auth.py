@@ -182,3 +182,61 @@ def allowed_file(filename):
 @auth_views.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+
+
+@auth_views.route('/student/resources', methods=['GET'])
+@jwt_required()
+def student_resources():
+    return render_template('student_resources.html')
+
+
+@auth_views.route('/internships/view_applications/<int:internship_id>', methods=['GET'])
+@jwt_required()
+def view_applications(internship_id):
+    if not current_user or current_user.account_type != 'company':
+        flash("Access denied.", 'danger')
+        return redirect(url_for('auth_views.login_action'))
+   
+    internship = Internship.query.get_or_404(internship_id)
+    if internship.company_id != current_user.id:
+        flash("Unauthorized access.", 'danger')
+        return redirect(url_for('auth_views.dashboard'))
+   
+    applications = Application.query.filter_by(internship_id=internship_id).all()
+    return render_template('view_applications.html', applications=applications, internship=internship)
+
+
+@auth_views.route('/internships/<int:internship_id>/shortlist/<int:applicant_id>', methods=['POST'])
+@jwt_required()
+def shortlist_applicant(internship_id, applicant_id):
+    if current_user.account_type != 'company' or current_user.id != Internship.query.get(internship_id).company_id:
+        flash("Unauthorized access.", 'danger')
+        return redirect(url_for('auth_views.dashboard'))
+
+
+    application = Application.query.filter_by(internship_id=internship_id, applicant_id=applicant_id).first()
+    if application:
+        if application.status != 'shortlisted':  # Check if not already shortlisted
+            application.status = 'shortlisted'
+            db.session.commit()
+            flash('Applicant shortlisted successfully!', 'success')
+        else:
+            flash('Applicant is already shortlisted.', 'info')
+    else:
+        flash('Application not found.', 'error')
+
+
+    return redirect(url_for('auth_views.view_applications', internship_id=internship_id))
+
+
+@auth_views.route('/download_resume/<filename>')
+@jwt_required()
+def download_resume(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+if __name__ == "__main__":
+  app.run(debug=True)
+
+
+
