@@ -178,7 +178,7 @@ h1, h2, h3, h4, h5, h6 {
   .tabs .tab {
     width: 100%;
   }
-}
+
 
   
 /* Sidenav Styles */
@@ -220,12 +220,6 @@ h1, h2, h3, h4, h5, h6 {
 .sidenav {
   transition: transform 0.3s ease-in-out;
 }
-
-
-
-
-
-
 
 }
 
