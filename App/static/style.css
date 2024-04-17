@@ -184,6 +184,87 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
+-container input[type="email"],
+.form-container input[type="password"] {
+  width: calc(100% - 24px);
+  margin-bottom: 1rem;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+
+/* Account type options */
+.account-type {
+  margin: 1rem 0;
+}
+
+
+.account-type label {
+  margin-right: 20px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+
+.account-type p {
+  margin: 0;
+  font-weight: bold;
+}
+
+
+/* Submit button */
+/* Submit button */
+.form-container button[type="submit"] {
+  background-color: #000; /* Black background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  margin-top: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+
+.form-container button[type="submit"]:hover {
+  opacity: 0.8; /* Slight transparency on hover for a subtle effect */
+}
+
+
+
+
+/* Forgotten password link */
+.form-container a {
+  color: #5c6bc0;
+  display: inline-block;
+  margin-top: 1rem;
+  text-decoration: none;
+}
+
+
+.form-container a:hover {
+  text-decoration: underline;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+
+  .form-container h1 {
+    font-size: 1.5rem;
+  }
+}
+
+
+
 
 
 
