@@ -234,6 +234,94 @@ def shortlist_applicant(internship_id, applicant_id):
 def download_resume(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+# Company Internship Routes
+
+@auth_views.route('/internships', methods=['GET'])
+@jwt_required()
+def list_internships():
+    # Assuming current_user has a property `id` that links to their company
+    internships = Internship.query.filter_by(company_id=current_user.id).all()
+    return render_template('internships.html', internships=internships)
+
+@auth_views.route('/internships/create', methods=['POST'])
+@jwt_required()
+def create_internship():
+    try:
+        data = request.form
+        # Ensure required fields are present
+        if not data['title'] or not data['description']:
+            flash('Title and description are required.', 'error')
+            return redirect(url_for('auth_views.dashboard'))
+        
+        # Convert 'deadline' from string to datetime object
+        deadline = datetime.strptime(data['deadline'], '%Y-%m-%d')  # Adjust the format string as necessary
+
+        new_internship = Internship(
+            title=data['title'],
+            description=data['description'],
+            requirements=data.get('requirements', ''),
+            duration=data['duration'],
+            company_id=current_user.id,
+            location=data['location'],
+            posted_date=datetime.now(),  # Ensure this is correct if you want to set it manually
+            deadline=deadline,  # Now passing a datetime object
+            active=data.get('active', 'True') == 'True'
+        )
+        db.session.add(new_internship)
+        db.session.commit()
+        flash('New internship created successfully!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Failed to create internship. Error: {str(e)}', 'error')
+    
+    return redirect(url_for('auth_views.dashboard'))
+
+@auth_views.route('/internships/update/<int:internship_id>', methods=['GET', 'POST'])
+@jwt_required()
+def update_internship(internship_id):
+    internship = Internship.query.get_or_404(internship_id)
+    if request.method == 'POST':
+        try:
+            internship.title = request.form.get('title', internship.title)
+            internship.description = request.form.get('description', internship.description)
+            internship.requirements = request.form.get('requirements', internship.requirements)
+            internship.duration = request.form.get('duration', internship.duration)
+            internship.location = request.form.get('location', internship.location)
+            deadline_str = request.form.get('deadline')
+            if deadline_str:
+                try:
+                    internship.deadline = datetime.strptime(deadline_str, '%Y-%m-%d')
+                except ValueError:
+                    flash('Invalid date format. Please use YYYY-MM-DD.', 'error')
+                    return render_template('edit_internship.html', internship=internship)
+
+            internship.active = request.form.get('active', 'True') == 'True'
+            db.session.commit()
+            flash('Internship updated successfully!', 'success')
+            return redirect(url_for('auth_views.dashboard'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating internship: {str(e)}', 'error')
+            return render_template('edit_internship.html', internship=internship)
+    
+    # Pass the formatted deadline for the form
+    formatted_deadline = internship.deadline.strftime('%Y-%m-%d') if internship.deadline else ''
+    return render_template('edit_internship.html', internship=internship, formatted_deadline=formatted_deadline)
+
+
+@auth_views.route('/internships/delete/<int:internship_id>', methods=['POST'])
+@jwt_required()
+def delete_internship(internship_id):
+    internship = Internship.query.get_or_404(internship_id)
+    if internship.company_id != current_user.id:
+        flash("Unauthorized access.", 'danger')
+        return redirect(url_for('auth_views.dashboard'))
+
+    db.session.delete(internship)
+    db.session.commit()
+    flash('Internship deleted successfully!', 'success')
+    return redirect(url_for('auth_views.dashboard'))
+
 
 if __name__ == "__main__":
   app.run(debug=True)

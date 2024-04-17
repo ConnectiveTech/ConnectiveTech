@@ -1,14 +1,145 @@
 {% extends "layout.html" %}
-{% block title %}Flask MVC App{% endblock %}
-{% block page %}Flask MVC App{% endblock %}
-
-{{ super() }}
+{% block title %}ConnectiveTech🔗{% endblock %}
+{% block page %}ConnectiveTech🔗{% endblock %}
 
 {% block content %}
-    <h1>Flask MVC</h1>
-    {% if is_authenticated %}
-        <p> Welcome {{current_user.username}} </p>
-    {% endif %}
-    <p>This is a boileplate flask application which follows the MVC pattern for structuring the project.</p>
+<h1>Welcome to ConnectiveTech🔗</h1>
+
+<video autoplay muted loop id="background-video">
+    <source src="{{ url_for('static', filename='images/background.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+{% if is_authenticated %}
+
+
+
+    <p>Welcome, {{ current_user.username }}! Explore the latest internship opportunities.</p>
+{% else %}
+    <p>Connect with leading companies and jumpstart your career. <a href="/login">Login</a> or <a href="/register">Register</a> to get started.</p>
+{% endif %}
+
+<!-- Feature Section -->
+<div class="row">
+    <div class="col s12 m6">
+        <h2>For Students</h2>
+        <p>Discover internship opportunities that can kickstart your career, provide valuable industry experience, and expand your professional network.</p>
+        <ul>
+            <li>Access to top companies and startups</li>
+            <li>Real-world experience in various fields</li>
+            <li>Build skills with hands-on projects</li>
+        </ul>
+        <a href="/register" class="btn">Join Now</a>
+    </div>
+    <div class="col s12 m6">
+        <h2>For Companies</h2>
+        <p>Find passionate, skilled students ready to contribute to your projects and drive your business forward.</p>
+        <ul>
+            <li>Connect with talented students</li>
+            <li>Fill roles with innovative thinkers</li>
+            <li>Enhance your projects with fresh perspectives</li>
+        </ul>
+        <a href="/register#company" class="btn">Register Your Company</a>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="section">
+    <h2>Testimonials</h2>
+    <p>Don't just take our word for it, hear from our users:</p>
+    <div class="carousel">
+        <a class="carousel-item" href="#one!"><img src="{{ url_for('static', filename='images/testimonial1.jpg') }}">John Doe - "This platform has significantly advanced my career."</a>
+        <a class="carousel-item" href="#two!"><img src="{{ url_for('static', filename='images/testimonial2.jpg') }}">Jane Smith - "We found incredible talent ready to jump into our tech projects."</a>
+    </div>
+</div>
+
+<!-- About Us Section -->
+<div id="about-us" class="section">
+<div class="section">
+    <h2>About ConnectiveTech</h2>
+    <p>ConnectiveTech is dedicated to bridging the gap between talented students and innovative companies. Our mission is to facilitate growth, learning, and successful career launches.</p>
+</div>
+</div>
+<!-- Blog/News Section -->
+<div class="section">
+    <h2>Latest News</h2>
+    <p>Stay updated with the latest trends in technology and internship opportunities:</p>
+    <div class="row">
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{ url_for('static', filename='images/news1.jpg') }}">
+                    <span class="card-title">Tech Innovations</span>
+                </div>
+                <div class="card-content">
+                    <p>Explore breakthroughs in technology that are transforming industries.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{ url_for('static', filename='images/news2.jpg') }}">
+                    <span class="card-title">Internship Programs</span>
+                </div>
+                <div class="card-content">
+                    <p>Insights into the most rewarding internship programs available for students.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{ url_for('static', filename='images/news3.jpg') }}">
+                    <span class="card-title">Career Development</span>
+                </div>
+                <div class="card-content">
+                    <p>Tips and advice for developing your career and advancing your professional life.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
+{% block footer %}
+<footer class="page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">ConnectiveTech</h5>
+                <p class="grey-text text-lighten-4">We connect the best talents with top companies to foster innovation and growth.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="#!">About Us</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Blog</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Press</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="center-align grey-text text-lighten-4">© 2024 ConnectiveTech, All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script>document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, {});
+
+    // ...
+
+    if(window.location.hash) {
+        let targetId = window.location.hash;
+        let element = document.querySelector(targetId);
+        if(element) {
+            element.scrollIntoView({behavior: "smooth"});
+        }
+    }
+});
+</script>
+{% endblock %}
