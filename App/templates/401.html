@@ -7,12 +7,13 @@
 {% block content %}
 <div class="container">
     <div class="row" style="margin-top: 10%;">
-        <div class="col s12 m10 offset-m1">
-            <div class="card-content">
-                <h1>401 - Not Authorized</h1>
-                <p>You do not have permission to access this resource. Please check your credentials and try again.</p>
+            <div class="container">
+                <h1>401 Unauthorized</h1>
+                <p>Sorry, you are not authorized to access this page.</p>
                 <p>{{error}}</p>
+                <a href="{{ url_for('auth_views.show_login_form') }}">Go to Login Page</a>
             </div>
+
             <div class="card-action">
                 <a href="/" class="waves-effect waves-light btn">Go Home</a>
                 <a href="javascript:history.back()" class="waves-effect waves-light btn">Go Back</a>

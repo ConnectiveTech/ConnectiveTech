@@ -158,34 +158,34 @@ def apply_for_internship(internship_id):
     return redirect(url_for('auth_views.student_dashboard'))
 
 
-@auth_views.route('/update_profile', methods=['POST'])
-@jwt_required()
-def update_student_profile():
-    email = request.form['email']
-    resume = request.files.get('resume')  
+# @auth_views.route('/update_profile', methods=['POST'])
+# @jwt_required()
+# def update_student_profile():
+#     email = request.form['email']
+#     resume = request.files.get('resume')  
 
 
-    if resume and allowed_file(resume.filename):
-        filename = secure_filename(resume.filename)
-        resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-        # Assuming you have a field in your user model to store the resume URL
-        current_user.resume_url = url_for('auth_views.uploaded_file', filename=filename, _external=True)
+#     if resume and allowed_file(resume.filename):
+#         filename = secure_filename(resume.filename)
+#         resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+#         # Assuming you have a field in your user model to store the resume URL
+#         current_user.resume_url = url_for('auth_views.uploaded_file', filename=filename, _external=True)
 
 
-    current_user.email = email
-    db.session.commit()
-    flash('Profile updated successfully!', 'success')
-    return redirect(url_for('auth_views.student_dashboard'))
+#     current_user.email = email
+#     db.session.commit()
+#     flash('Profile updated successfully!', 'success')
+#     return redirect(url_for('auth_views.student_dashboard'))
 
 
 # Helper function to check allowed file extensions
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
+# def allowed_file(filename):
+#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
 
 
-@auth_views.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+# @auth_views.route('/uploads/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
 
 
 @auth_views.route('/student/resources', methods=['GET'])
