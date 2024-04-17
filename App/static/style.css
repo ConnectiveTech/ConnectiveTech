@@ -122,19 +122,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile specific styles */
 @media only screen and (max-width: 600px) {
-  /* Reduce navbar padding and adjust logo size on mobile */
+  
   nav .nav-wrapper {
     padding: 0 1rem;
   }
 
   .brand-logo {
-    font-size: 1.2rem; /* Adjusted for balance and aesthetics */
+    font-size: 1.2rem; 
   }
 
-  /* Reduce container padding on mobile */
-  .container {
-    padding: 2rem 0.5rem;
-  }
 
   /* Hide mobile-specific nav elements */
   nav .nav-mobile {
@@ -148,24 +144,24 @@ h1, h2, h3, h4, h5, h6 {
 
   /* Futuristic button styling with improved size and centered text */
   .btn, .btn-large {
-    width: 90%; /* Slightly smaller for aesthetic balance */
-    padding: 10px 20px; /* Reduced padding */
-    font-size: 15px; /* Smaller font size for a sleek look */
-    margin: 8px auto; /* Centered with automatic margins */
-    border-radius: 5px; /* Soft rounded corners */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle, more futuristic shadow */
-    display: flex; /* Use flexbox to center content */
-    justify-content: center; /* Horizontally center text */
-    align-items: center; /* Vertically center text */
-    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
-    text-transform: uppercase; /* Uppercase text for a modern look */
-    letter-spacing: 1px; /* Increase letter spacing for readability */
+    width: 90%; 
+    padding: 10px 20px; 
+    font-size: 15px; 
+    margin: 8px auto; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: background-color 0.3s, box-shadow 0.3s; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
   }
 
   /* Enhanced visual feedback for button interaction */
   .btn:hover, .btn-large:hover {
-    background-color: lighten(var(--primary-color), 10%); /* Lighter on hover for contrast */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.25); /* Enhanced shadow for depth */
+    background-color: lighten(var(--primary-color), 10%);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25); 
   }
 
   /* Stack tabs in a column on mobile */
@@ -183,37 +179,37 @@ h1, h2, h3, h4, h5, h6 {
   
 /* Sidenav Styles */
 .sidenav {
-  width: 250px; /* Width of the sidenav */
-  background-color: #ffffff; /* Change as needed */
-  color: #424242; /* Text color inside sidenav */
+  width: 250px; 
+  background-color: #ffffff;
+  color: #424242; 
 }
 
 .sidenav a {
-  color: #424242; /* Links color, change as needed */
-  font-size: 16px; /* Adjust font size for better readability on mobile */
-  padding: 16px 24px; /* Padding inside sidenav links for easier touch */
+  color: #424242; 
+  font-size: 16px; 
+  padding: 16px 24px; 
 }
 
 .sidenav a:hover {
-  background-color: #eeeeee; /* Hover background color for links */
+  background-color: #eeeeee; 
 }
 
 /* Active link styling */
 .sidenav .active {
-  background-color: #e0e0e0; /* Active link background color */
-  color: #000000; /* Active link color */
+  background-color: #e0e0e0; 
+  color: #000000; 
 }
 
 /* Adjusting the sidenav overlay opacity */
 .sidenav-overlay {
-  opacity: 0.5; /* Adjust the opacity for dimming effect */
+  opacity: 0.5; 
 }
 
 /* Ensure the sidenav trigger is visible and styled */
 .nav-extended .sidenav-trigger {
   display: block;
-  color: #000000; /* Adjust as per your color theme */
-  margin: 0 10px; /* Space it out from edges */
+  color: #000000; 
+  margin: 0 10px;
 }
 
 /* Add transition for smooth sidenav animations */
@@ -223,8 +219,32 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
+/* CSS FOR THE CREDS PAGE */
+/* General container styling */
+#container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+/* Form container */
+.form-container {
+  margin-bottom: 1.5rem;
+}
+
+/* Titles within form */
+.form-container h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
 
 -container input[type="email"],
+.form-container input[type="text"],
+.form-container input[type="email"],
 .form-container input[type="password"] {
   width: calc(100% - 24px);
   margin-bottom: 1rem;
@@ -233,7 +253,6 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
   box-sizing: border-box; /* Include padding in the width calculation */
 }
-
 
 /* Account type options */
 .account-type {
@@ -254,8 +273,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* Submit button */
-/* Submit button */
+
+/* /* Submit button */
 .form-container button[type="submit"] {
   background-color: #000; /* Black background */
   color: white;
@@ -266,7 +285,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
   cursor: pointer;
   transition: opacity 0.3s ease;
-}
+} 
 
 
 .form-container button[type="submit"]:hover {
