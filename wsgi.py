@@ -36,7 +36,7 @@ def initialize():
         email='bob@gmail.com',
         password='bobpass',
         account_type='company',
-        company_name='MICROBOB'
+        company_name='TRINITECH'
     )
     db.session.add(company)
 

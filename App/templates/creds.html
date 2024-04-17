@@ -1,22 +1,31 @@
 {% extends "layout.html" %}
 
-
-{% block title %}Login/Register - ConnectiveTech🔗{% endblock %}
-{% block page %}ConnectiveTech🔗{% endblock %}
-
+{% block title %}Login/SignUp - ConnectiveTech🔗{% endblock %}
+{% block page %}Login/SignUp - ConnectiveTech🔗{% endblock %}
 
 {% block content %}
 
-
-<!-- Background Video -->
 <video autoplay muted loop id="background-video">
     <source src="{{ url_for('static', filename='images/background.mp4') }}" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 
-
 <div class="container" id="container">
-    <!-- Sign up form -->
+    {% if is_authenticated %}
+   
+    {% if current_user.account_type == 'student' %}
+    <h2>Welcome back, {{ current_user.username }}</h2>
+    <p>Ready to explore new internship opportunities? Check out the latest listings tailored for you!</p>
+    {% elif current_user.account_type == 'company' %}
+    <h2>Welcome back, {{ current_user.username }} - {{current_user.company_name}}!</h2>
+    <p>Looking to find the perfect candidates for your Projects? Post a new internship or view applications for your listings.</p>
+    {% endif %}
+
+    <div class="dashboard-button-container">
+        <a href="{{ url_for('auth_views.dashboard') }}" class="btn">View Dashboard</a>
+    </div>
+    {% else %}
+
     <div class="form-container sign-up-container" id="sign-up">
         <form action="{{ url_for('auth_views.register') }}" method="POST">
             <h1>Create Account</h1>
@@ -51,32 +60,21 @@
             <button type="submit">Sign In</button>
         </form>
     </div>
+    {% endif %}
 </div>
-
 
 <script>
     // JavaScript to toggle the visibility of the Company Name field
     document.addEventListener('DOMContentLoaded', function() {
         const accountTypeRadios = document.querySelectorAll('input[name="accountType"]');
         const companyNameField = document.getElementById('companyNameField');
-
-
         function toggleCompanyNameField() {
             companyNameField.style.display = document.getElementById('company').checked ? 'block' : 'none';
         }
-
-
         accountTypeRadios.forEach(function(radio) {
             radio.addEventListener('change', toggleCompanyNameField);
         });
-
-
         toggleCompanyNameField(); // Call on initial load
     });
 </script>
 {% endblock %}
-
-
-
-
-
