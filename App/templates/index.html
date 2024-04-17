@@ -9,14 +9,13 @@
     <source src="{{ url_for('static', filename='images/background.mp4') }}" type="video/mp4">
     Your browser does not support the video tag.
 </video>
+
 {% if is_authenticated %}
-
-
-
-    <p>Welcome, {{ current_user.username }}! Explore the latest internship opportunities.</p>
+    <p class="welcome-message">Welcome, {{ current_user.username }}! Explore your <a href="/dashboard">Dashboard</a> !</p>
 {% else %}
-    <p>Connect with leading companies and jumpstart your career. <a href="/login">Login</a> or <a href="/register">Register</a> to get started.</p>
+    <p class="welcome-message">Connect with leading companies and jumpstart your career. <a href="/login">Login</a> or <a href="/register">Register</a> to get started.</p>
 {% endif %}
+
 
 <!-- Feature Section -->
 <div class="row">

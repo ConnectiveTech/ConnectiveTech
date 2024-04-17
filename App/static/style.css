@@ -122,49 +122,50 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile specific styles */
 @media only screen and (max-width: 600px) {
- 
+  /* Reduce navbar padding and adjust logo size on mobile */
   nav .nav-wrapper {
     padding: 0 1rem;
   }
 
   .brand-logo {
-    font-size: 1.2rem; 
+    font-size: 1.2rem; /* Adjusted for balance and aesthetics */
+  }
 
-
+  /* Reduce container padding on mobile */
   .container {
     padding: 2rem 0.5rem;
   }
 
-
+  /* Hide mobile-specific nav elements */
   nav .nav-mobile {
     display: none;
   }
 
-
+  /* Adjust heading font sizes on mobile */
   h1, h2, h3, h4, h5, h6 {
     font-size: 4vw;
   }
 
   /* Futuristic button styling with improved size and centered text */
   .btn, .btn-large {
-    width: 90%; 
-    padding: 10px 20px; 
-    font-size: 15px; 
-    margin: 8px auto; 
-    border-radius: 5px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    transition: background-color 0.3s, box-shadow 0.3s;
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
+    width: 90%; /* Slightly smaller for aesthetic balance */
+    padding: 10px 20px; /* Reduced padding */
+    font-size: 15px; /* Smaller font size for a sleek look */
+    margin: 8px auto; /* Centered with automatic margins */
+    border-radius: 5px; /* Soft rounded corners */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle, more futuristic shadow */
+    display: flex; /* Use flexbox to center content */
+    justify-content: center; /* Horizontally center text */
+    align-items: center; /* Vertically center text */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+    text-transform: uppercase; /* Uppercase text for a modern look */
+    letter-spacing: 1px; /* Increase letter spacing for readability */
   }
 
   /* Enhanced visual feedback for button interaction */
   .btn:hover, .btn-large:hover {
-    background-color: lighten(var(--primary-color), 10%);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.25); 
+    background-color: lighten(var(--primary-color), 10%); /* Lighter on hover for contrast */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25); /* Enhanced shadow for depth */
   }
 
   /* Stack tabs in a column on mobile */
@@ -182,37 +183,37 @@ h1, h2, h3, h4, h5, h6 {
   
 /* Sidenav Styles */
 .sidenav {
-  width: 250px; 
-  background-color: #ffffff; 
-  color: #424242; 
+  width: 250px; /* Width of the sidenav */
+  background-color: #ffffff; /* Change as needed */
+  color: #424242; /* Text color inside sidenav */
 }
 
 .sidenav a {
-  color: #424242;
-  font-size: 16px; 
-  padding: 16px 24px; 
+  color: #424242; /* Links color, change as needed */
+  font-size: 16px; /* Adjust font size for better readability on mobile */
+  padding: 16px 24px; /* Padding inside sidenav links for easier touch */
 }
 
 .sidenav a:hover {
-  background-color: #eeeeee; 
+  background-color: #eeeeee; /* Hover background color for links */
 }
 
 /* Active link styling */
 .sidenav .active {
-  background-color: #e0e0e0; 
-  color: #000000; 
+  background-color: #e0e0e0; /* Active link background color */
+  color: #000000; /* Active link color */
 }
 
 /* Adjusting the sidenav overlay opacity */
 .sidenav-overlay {
-  opacity: 0.5; 
+  opacity: 0.5; /* Adjust the opacity for dimming effect */
 }
 
 /* Ensure the sidenav trigger is visible and styled */
 .nav-extended .sidenav-trigger {
   display: block;
-  color: #000000; 
-  margin: 0 10px; 
+  color: #000000; /* Adjust as per your color theme */
+  margin: 0 10px; /* Space it out from edges */
 }
 
 /* Add transition for smooth sidenav animations */
@@ -230,7 +231,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-sizing: border-box; 
+  box-sizing: border-box; /* Include padding in the width calculation */
 }
 
 
@@ -253,10 +254,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-
+/* Submit button */
 /* Submit button */
 .form-container button[type="submit"] {
-  background-color: #000; 
+  background-color: #000; /* Black background */
   color: white;
   border: none;
   padding: 10px 20px;
@@ -269,7 +270,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .form-container button[type="submit"]:hover {
-  opacity: 0.8; 
+  opacity: 0.8; /* Slight transparency on hover for a subtle effect */
 }
 
 
@@ -301,123 +302,3 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.5rem;
   }
 }
-
-/* Testimonial and News Cards */
-.card {
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  border-radius: 8px;
-}
-
-.card-content {
-  padding: 15px;
-}
-
-.card-title {
-  font-weight: bold;
-}
-
-.carousel-item img {
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto;
-}
-
-/* Footer styles */
-.page-footer {
-  background-color: #333;
-  color: white;
-  padding: 4rem 2rem;
-  margin-top: 2rem;
-}
-
-.page-footer .container {
-  margin-bottom: 2rem;
-}
-
-.page-footer h5 {
-  margin-top: 0;
-}
-
-.page-footer p {
-  margin-bottom: 0;
-}
-
-.footer-bottom {
-  padding: 1rem 0;
-  background-color: #222;
-  text-align: center;
-}
-
-.footer-bottom p {
-  margin: 0;
-}
-
-/* DASHBOARD  */
-
-.dashboard-menu {
-  margin-top: 2rem;
-}
-
-.dashboard-link {
-  display: inline-block;
-  margin-right: 1rem;
-  padding: 10px 15px;
-  background-color: #5c6bc0;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.dashboard-link:hover {
-  background-color: #3f51b5;
-}
-
-/* Mobile Styles for Student Dashboard */
-@media only screen and (max-width: 600px) {
-  .dashboard-link {
-    display: block; /* Make each link full width */
-    width: 100%; /* Full width for easier access */
-    margin-bottom: 10px; /* Add space between buttons */
-  }
-
-  /* Optimizing card layout for mobile */
-  .card {
-    margin: 10px 0; /* More vertical space between cards */
-  }
-
-  .card-content {
-    padding: 10px; /* Reduced padding inside the card for more space */
-  }
-
-  .card-title {
-    font-size: 1.2em; /* Larger font size for better readability */
-  }
-
-  .internship-company {
-    font-size: 0.9em; /* Slightly smaller to differentiate from main content */
-    font-weight: bold; /* Make it bold for better visibility */
-  }
-
-  .internship-description {
-    font-size: 0.9em; /* Slightly smaller to keep focus on titles */
-  }
-
-  /* Adjust the button size in the card action for better accessibility */
-  .card-action a.btn {
-    padding: 10px 15px; /* Optimal padding for touch targets */
-    font-size: 0.8em; /* Adjust font size to fit the button */
-    margin: 5px 0; /* Space around buttons */
-  }
-}
-
-/* This ensures that the student dashboard elements are visually accessible and easy to interact with on mobile devices. */
-
-
-
-
-
-
-
