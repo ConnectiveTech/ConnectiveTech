@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .applications-list li {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        list-style-type: none;
+        position: relative;
+        border: 1px solid #ddd;
+    }
+    .applications-list li:hover {
+        background-color: #e9e9e9;
+    }
+    .applicant-info {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .applicant-info strong {
+        color: #333;
+    }
+    .shortlist-button {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .shortlist-button:hover {
+        background-color: #45a049;
+    }
+    .shortlist-button[disabled] {
+        background-color: #ccc;
+        cursor: default;
+    }
+    .cover-letter {
+        margin-top: 10px;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="container">
+    <h1>Applications for {{ internship.title }}</h1>
+    {% if applications %}
+    <ul class="applications-list">
+        {% for application in applications %}
+        <li>
+            <div class="applicant-info">
+                <strong>{{ application.applicant.username }}</strong> - {{ application.applicant.email }}
+                <span style="float: right;">Status: {{ application.status }}</span>
+            </div>
+            
+            {% if application.resume_url %}
+            <a href="{{ url_for('auth_views.download_resume', filename=application.resume_url) }}" target="_blank">View Resume</a>
+            {% endif %}
+            
+            {% if application.cover_letter %}
+            <div class="cover-letter">
+                <strong>Cover Letter:</strong>
+                <p>{{ application.cover_letter }}</p>
+            </div>
+            {% endif %}
+            {% if application.status != 'shortlisted' %}
+            <form action="{{ url_for('auth_views.shortlist_applicant', internship_id=internship.id, applicant_id=application.applicant.id) }}" method="post" style="display: inline;">
+                <button type="submit" class="shortlist-button">Shortlist</button>
+            </form>
+            {% else %}
+            <button class="shortlist-button" disabled>Shortlisted</button>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No applications yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
