@@ -8,12 +8,12 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 def index_page():
     return render_template('index.html')
 
-@index_views.route('/init', methods=['GET'])
+@index_views.route('/init', methods=['GET']) 
 def init():
     db.drop_all()
     db.create_all()
-    create_user('bob', 'bob@gmail.com', 'bobpass','company','MICROBOB')
-    create_user('rob','rob@gmail.com','robpass','student')
+    create_user('bob', 'bob@gmail.com', 'bobpass','company','MICROBOB')#Bob is by default a Company Account
+    create_user('rob','rob@gmail.com','robpass','student')#Rob is by default a Student Account
     return jsonify(message='db initialized!')
 
 @index_views.route('/health', methods=['GET'])
