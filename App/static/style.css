@@ -1,0 +1,137 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap');
+
+
+/* Root variables for colors and fonts */
+:root {
+  --primary-color: #000; /* Change as needed */
+  --background-color: #fff; /* Change as needed */
+  --text-color: #000; /* Change as needed */
+  --font-body: 'Roboto', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+}
+/* Ensuring the body and html take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+
+/* Background video styling */
+#background-video {
+  position: fixed; /* Fixed position to cover the whole screen */
+  top: 0;
+  left: 0;
+  min-width: 100%; /* Minimum width to cover the screen */
+  min-height: 100%; /* Minimum height to cover the screen */
+  width: auto; /* Maintain aspect ratio */
+  height: auto; /* Maintain aspect ratio */
+  z-index: -100; /* Send the video to the back */
+  background-size: cover; /* Ensure the cover fits the screen */
+  overflow: hidden; /* Hide the overflowing parts */
+}
+/* Base Styles */
+body {
+  font-family: var(--font-body);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Navbar Styles */
+nav {
+  background-color: transparent !important; /* Transparent background */
+  box-shadow: none; /* No shadow for a flat style */
+}
+
+
+nav .nav-wrapper {
+  padding: 0 2rem; /* Horizontal padding */
+}
+
+
+.nav-extended .nav-content {
+  border: none; /* Removes border from extended nav if present */
+}
+
+
+/* Adjusts the tab underline color */
+.tabs .indicator {
+  background-color: var(--primary-color);
+}
+
+
+/* Logo and Branding */
+.brand-logo {
+  font-family: var(--font-heading);
+  color: var(--primary-color) !important; /* Override the color */
+}
+
+
+/* Navbar Links */
+.nav-wrapper > ul > li > a {
+  color: var(--text-color) !important; /* Override the color */
+}
+
+
+/* Add animation for hover effects */
+.nav-wrapper > ul > li > a:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Slight overlay on hover */
+}
+
+
+/* Content Styles */
+.container {
+  padding: 4rem 1.5rem; /* Top and bottom padding with a bit of horizontal padding */
+  max-width: 1200px; /* Maximum width of the container */
+  margin: auto; /* Center the container */
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+}
+
+
+/* Button Styles */
+.btn, .btn-large {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  text-transform: none;
+}
+
+
+/* Footer Styles */
+.page-footer {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+
+/* Make testimonial images circular */
+.carousel-item img {
+  height: 150px;  /* Adjust based on your design needs */
+  width: 150px;   /* Adjust based on your design needs */
+  border-radius: 50%;
+  object-fit: cover;  /* Ensures the image covers the area without being distorted */
+  display: block;  /* Ensures that the image is treated as a block element, centering it if needed */
+  margin: 0 auto;
+}
+
+
+.carousel-item {
+  text-align: center;  /* Centers the text and potentially any inline elements like images */
+  padding: 10px;  /* Adjust or remove padding based on your design needs */
+}
+
+
+
+
+
