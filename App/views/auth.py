@@ -117,3 +117,68 @@ def logout_api():
     response = jsonify(message="Logged Out!")
     unset_jwt_cookies(response)
     return response
+
+
+# Students Routes
+@auth_views.route('/dashboard/student', methods=['GET'])
+@jwt_required()
+def student_dashboard():
+    internships = Internship.query.filter(Internship.active == True).all()
+    applied_internship_ids = {app.internship_id for app in current_user.applications}
+    shortlisted_ids = {app.internship_id for app in current_user.applications if app.status == 'shortlisted'}
+    return render_template('student_dashboard.html', internships=internships, shortlisted_ids=shortlisted_ids, applied_internship_ids=applied_internship_ids, current_user=current_user)
+
+
+@auth_views.route('/internships/apply/<int:internship_id>', methods=['POST'])
+@jwt_required()
+def apply_for_internship(internship_id):
+    internship = Internship.query.get_or_404(internship_id)
+    application_note = request.form.get('application_note', '')
+
+
+    existing_application = Application.query.filter_by(applicant_id=current_user.id, internship_id=internship_id).first()
+    if existing_application:
+        flash('You have already applied for this internship.', 'info')
+    else:
+        new_application = Application(
+            internship_id=internship_id,
+            applicant_id=current_user.id,
+            status='submitted',
+            cover_letter=application_note  # Assuming your Application model has a field for application_note
+        )
+        db.session.add(new_application)
+        db.session.commit()
+        flash('Application submitted successfully!', 'success')
+
+
+    return redirect(url_for('auth_views.student_dashboard'))
+
+
+@auth_views.route('/update_profile', methods=['POST'])
+@jwt_required()
+def update_student_profile():
+    email = request.form['email']
+    resume = request.files.get('resume')  # Ensure you handle the case where no file is uploaded
+
+
+    if resume and allowed_file(resume.filename):
+        filename = secure_filename(resume.filename)
+        resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        # Assuming you have a field in your user model to store the resume URL
+        current_user.resume_url = url_for('auth_views.uploaded_file', filename=filename, _external=True)
+
+
+    current_user.email = email
+    db.session.commit()
+    flash('Profile updated successfully!', 'success')
+    return redirect(url_for('auth_views.student_dashboard'))
+
+
+# Helper function to check allowed file extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
+
+
+@auth_views.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
