@@ -92,8 +92,8 @@
 
 <div class="container">
     <h2>Welcome, {{ current_user.username }}👋!</h2>
-    <p><a href="{{ url_for('auth_views.update_student_profile') }}" class="btn">Update Your Profile</a></p>
-    <p>Here are the available internships you can apply to:</p>
+    <!-- <p><a href="{{ url_for('auth_views.update_student_profile') }}" class="btn">Update Your Profile</a></p>
+    <p>Here are the available internships you can apply to:</p> -->
     <div class="row">
         {% for internship in internships %}
         <div class="col s12 m6">
