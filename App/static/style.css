@@ -2,24 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap');
 
-
 /* Root variables for colors and fonts */
 :root {
   --primary-color: #000;
-  --background-color: #fff; 
+  --background-color: #fff;
   --text-color: #000;
   --font-body: 'Roboto', sans-serif;
   --font-heading: 'Montserrat', sans-serif;
 }
-/* Ensuring the body and html take full height */
+
+/* Ensure full height for html and body, and prevent horizontal overflow */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; 
+  overflow-x: hidden;
+}
 
-
-/* Background video styling */
+/* Styling for background video */
 #background-video {
   position: fixed;
   top: 0;
@@ -32,89 +32,79 @@ html, body {
   background-size: cover;
   overflow: hidden;
 }
-/* Base Styles */
+
+/* Base body styles */
 body {
   font-family: var(--font-body);
   color: var(--text-color);
   background-color: var(--background-color);
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
 }
 
-
-/* Navbar Styles */
+/* Navbar transparency and no shadow */
 nav {
   background-color: transparent !important;
   box-shadow: none;
 }
 
-
+/* Navbar padding */
 nav .nav-wrapper {
   padding: 0 2rem;
 }
 
-
+/* Remove border from extended nav */
 .nav-extended .nav-content {
   border: none;
 }
 
-
-/* Adjusts the tab underline color */
+/* Tab indicator color */
 .tabs .indicator {
   background-color: var(--primary-color);
 }
 
-
-/* Logo and Branding */
+/* Brand logo styling */
 .brand-logo {
   font-family: var(--font-heading);
   color: var(--primary-color) !important;
 }
 
-
-/* Navbar Links */
+/* Navbar link colors */
 .nav-wrapper > ul > li > a {
   color: var(--text-color) !important;
 }
 
-
-/* Add animation for hover effects */
+/* Hover effect for navbar links */
 .nav-wrapper > ul > li > a:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-
-/* Content Styles */
+/* Container padding and width */
 .container {
   padding: 4rem 1.5rem;
   max-width: 1200px;
   margin: auto;
 }
 
-
+/* Heading colors */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--primary-color);
 }
 
-
-/* Button Styles */
+/* Button colors and no text transformation */
 .btn, .btn-large {
   background-color: var(--primary-color);
   color: var(--background-color);
   text-transform: none;
 }
 
-
-/* Footer Styles */
+/* Footer colors */
 .page-footer {
   background-color: var(--primary-color);
   color: var(--background-color);
 }
 
-
-/* Make testimonial images circular */
+/* Circular testimonial images */
 .carousel-item img {
   height: 150px;
   width: 150px;
@@ -124,63 +114,119 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
-
+/* Center text in carousel item */
 .carousel-item {
   text-align: center;
   padding: 10px;
 }
 
-
-
-
-/* Mobile Styles */
+/* Mobile specific styles */
 @media only screen and (max-width: 600px) {
-  /* Navbar padding and logo size adjustments for mobile */
+  /* Reduce navbar padding and adjust logo size on mobile */
   nav .nav-wrapper {
     padding: 0 1rem;
   }
 
-
   .brand-logo {
-    font-size: 1.2rem;
+    font-size: 1.2rem; /* Adjusted for balance and aesthetics */
   }
 
-
-  /* Container padding for mobile */
+  /* Reduce container padding on mobile */
   .container {
     padding: 2rem 0.5rem;
   }
 
-
-  /* Mobile navbar hides some elements */
+  /* Hide mobile-specific nav elements */
   nav .nav-mobile {
     display: none;
   }
 
-
-  /* Adjust font sizes for mobile */
+  /* Adjust heading font sizes on mobile */
   h1, h2, h3, h4, h5, h6 {
     font-size: 4vw;
   }
 
-
-  /* Adjust button size for mobile */
+  /* Futuristic button styling with improved size and centered text */
   .btn, .btn-large {
-    padding: 0.5rem 1rem;
-    font-size: 3.5vw;
+    width: 90%; /* Slightly smaller for aesthetic balance */
+    padding: 10px 20px; /* Reduced padding */
+    font-size: 15px; /* Smaller font size for a sleek look */
+    margin: 8px auto; /* Centered with automatic margins */
+    border-radius: 5px; /* Soft rounded corners */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle, more futuristic shadow */
+    display: flex; /* Use flexbox to center content */
+    justify-content: center; /* Horizontally center text */
+    align-items: center; /* Vertically center text */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+    text-transform: uppercase; /* Uppercase text for a modern look */
+    letter-spacing: 1px; /* Increase letter spacing for readability */
   }
 
+  /* Enhanced visual feedback for button interaction */
+  .btn:hover, .btn-large:hover {
+    background-color: lighten(var(--primary-color), 10%); /* Lighter on hover for contrast */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25); /* Enhanced shadow for depth */
+  }
 
-  /* Adjust tab size for mobile */
+  /* Stack tabs in a column on mobile */
   .nav-extended .nav-content {
     display: flex;
     flex-direction: column;
   }
 
-
+  /* Full width tabs on mobile */
   .tabs .tab {
     width: 100%;
   }
+}
+
+  
+/* Sidenav Styles */
+.sidenav {
+  width: 250px; /* Width of the sidenav */
+  background-color: #ffffff; /* Change as needed */
+  color: #424242; /* Text color inside sidenav */
+}
+
+.sidenav a {
+  color: #424242; /* Links color, change as needed */
+  font-size: 16px; /* Adjust font size for better readability on mobile */
+  padding: 16px 24px; /* Padding inside sidenav links for easier touch */
+}
+
+.sidenav a:hover {
+  background-color: #eeeeee; /* Hover background color for links */
+}
+
+/* Active link styling */
+.sidenav .active {
+  background-color: #e0e0e0; /* Active link background color */
+  color: #000000; /* Active link color */
+}
+
+/* Adjusting the sidenav overlay opacity */
+.sidenav-overlay {
+  opacity: 0.5; /* Adjust the opacity for dimming effect */
+}
+
+/* Ensure the sidenav trigger is visible and styled */
+.nav-extended .sidenav-trigger {
+  display: block;
+  color: #000000; /* Adjust as per your color theme */
+  margin: 0 10px; /* Space it out from edges */
+}
+
+/* Add transition for smooth sidenav animations */
+.sidenav {
+  transition: transform 0.3s ease-in-out;
+}
+
+
+
+
+
+
+
 }
 
 
