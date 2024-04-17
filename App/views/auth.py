@@ -1,10 +1,14 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
+from App.database import db
+from App.models import User,Internship,Application
+
+from datetime import datetime
 
 from.index import index_views
 
 from App.controllers import (
-    login
+    login,    
 )
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
@@ -68,7 +72,7 @@ def register():
     account_type = request.form.get('accountType')
     company_name = request.form.get('companyName') if account_type == 'company' else None
    
-    # Assume User model and db session are correctly set up
+    
     new_user = User(username=username, email=email, password=password, account_type=account_type, company_name=company_name)
     db.session.add(new_user)
     db.session.commit()
@@ -85,7 +89,7 @@ def dashboard():
         internships = Internship.query.filter_by(company_id=current_user.id).all()
         return render_template('company_dashboard.html', internships=internships, current_user=current_user)
     elif current_user.account_type == 'student':
-        internships = Internship.query.filter(Internship.active == True).all() # Make sure to fetch only active internships
+        internships = Internship.query.filter(Internship.active == True).all() 
         return render_template('student_dashboard.html', internships=internships, current_user=current_user)
     else:
         flash('You do not have access to this page.', 'error')
@@ -144,7 +148,7 @@ def apply_for_internship(internship_id):
             internship_id=internship_id,
             applicant_id=current_user.id,
             status='submitted',
-            cover_letter=application_note  # Assuming your Application model has a field for application_note
+            cover_letter=application_note  
         )
         db.session.add(new_application)
         db.session.commit()
@@ -158,7 +162,7 @@ def apply_for_internship(internship_id):
 @jwt_required()
 def update_student_profile():
     email = request.form['email']
-    resume = request.files.get('resume')  # Ensure you handle the case where no file is uploaded
+    resume = request.files.get('resume')  
 
 
     if resume and allowed_file(resume.filename):
@@ -239,7 +243,6 @@ def download_resume(filename):
 @auth_views.route('/internships', methods=['GET'])
 @jwt_required()
 def list_internships():
-    # Assuming current_user has a property `id` that links to their company
     internships = Internship.query.filter_by(company_id=current_user.id).all()
     return render_template('internships.html', internships=internships)
 
@@ -254,7 +257,7 @@ def create_internship():
             return redirect(url_for('auth_views.dashboard'))
         
         # Convert 'deadline' from string to datetime object
-        deadline = datetime.strptime(data['deadline'], '%Y-%m-%d')  # Adjust the format string as necessary
+        deadline = datetime.strptime(data['deadline'], '%Y-%m-%d')  
 
         new_internship = Internship(
             title=data['title'],
@@ -263,8 +266,7 @@ def create_internship():
             duration=data['duration'],
             company_id=current_user.id,
             location=data['location'],
-            posted_date=datetime.now(),  # Ensure this is correct if you want to set it manually
-            deadline=deadline,  # Now passing a datetime object
+            deadline=deadline,  
             active=data.get('active', 'True') == 'True'
         )
         db.session.add(new_internship)

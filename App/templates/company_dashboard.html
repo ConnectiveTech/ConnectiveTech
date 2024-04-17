@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block title %}Company Dashboard 🏢{% endblock %}
+{% block page %}Company Dashboard 🏢{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-content {
+        padding: 10px;
+    }
+    .create-internship-form, .internships, .applications {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .internships ul, .applications ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .internships li, .applications li {
+        margin-bottom: 10px;
+        padding: 8px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .internships li:hover, .applications li:hover {
+        background-color: #f0f0f0;
+    }
+    form {
+        display: inline;
+    }
+    button, .button-link {
+        margin-top: 5px;
+        margin-left: 5px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 14px;
+    }
+    button:hover, .button-link:hover {
+        background-color: #0056b3;
+    }
+    .button-link {
+        display: inline-block;
+    }
+    @media (max-width: 768px) {
+        .dashboard-content h1 {
+            font-size: 18px; /* Reduce font size for better fit on mobile screens */
+            text-align: center; /* Center align the title */
+        }
+        .dashboard-content {
+            padding: 5px;
+        }
+        .create-internship-form, .internships, .applications {
+            padding: 5px;
+            margin-top: 5px;
+        }
+        button, .button-link {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+        .internships li, .applications li {
+            padding: 5px;
+        }
+    }
+</style>
+
+<video autoplay muted loop id="background-video">
+    <source src="{{ url_for('static', filename='images/back2.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="dashboard">
+    <section class="dashboard-content">
+        <h1>Welcome, {{ current_user.company_name }}👋!</h1>
+        
+        <!-- Form for creating new internships -->
+        <div class="create-internship-form">
+            <h2>Add New Internship</h2>
+            <form action="{{ url_for('auth_views.create_internship') }}" method="post">
+                <input type="text" name="title" placeholder="Title" required>
+                <textarea name="description" placeholder="Description" required></textarea>
+                <textarea name="requirements" placeholder="Requirements"></textarea>
+                <input type="text" name="duration" placeholder="Duration" required>
+                <input type="text" name="location" placeholder="Location" required>
+                <input type="date" name="deadline" required>
+                <select name="active">
+                    <option value="True">Active</option>
+                    <option value="False">Inactive</option>
+                </select>
+                <button type="submit">Create Internship</button>
+            </form>
+        </div>
+
+        <!-- Internship listings -->
+        <div class="internships">
+            <h2>Internship Listings</h2>
+            {% if internships %}
+            <ul>
+                {% for internship in internships %}
+                <li>
+                    <h3>{{ internship.title }}</h3>
+                    <p>{{ internship.description }}</p>
+                    <!-- Link to view applications -->
+                    <a href="{{ url_for('auth_views.view_applications', internship_id=internship.id) }}" class="button-link">View Applications</a>
+                    <a href="{{ url_for('auth_views.update_internship', internship_id=internship.id) }}" class="button-link">Edit</a>
+                    <form action="{{ url_for('auth_views.delete_internship', internship_id=internship.id) }}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No internships available.</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}

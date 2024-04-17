@@ -30,7 +30,7 @@ def initialize():
     db.drop_all()
     db.create_all()
     
-    # Create a sample company user with hashed password
+    
     company = User(
         username='bob',
         email='bob@gmail.com',
@@ -40,7 +40,7 @@ def initialize():
     )
     db.session.add(company)
 
-    # Create a sample student user with hashed password
+    
     student = User(
         username='alice',
         email='alice@student.edu',
@@ -61,7 +61,7 @@ def initialize():
             duration='6 months',
             company_id=company.id,
             location='Remote',
-            deadline=datetime.utcnow() + timedelta(days=180),  # assuming you import timedelta
+            deadline=datetime.utcnow() + timedelta(days=180), 
             active=True
         ),
         Internship(
@@ -86,7 +86,7 @@ def initialize():
         )
     ]
 
-    # Use bulk_save_objects to efficiently insert data
+    
     db.session.bulk_save_objects(internships)
     db.session.commit()
 
