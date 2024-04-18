@@ -90,6 +90,13 @@
     
 </script>
 
+<video autoplay muted loop id="background-video">
+    <source src="{{ url_for('static', filename='images/back2.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+
+
 <div class="container">
     <h2>Welcome, {{ current_user.username }}👋!</h2>
    
