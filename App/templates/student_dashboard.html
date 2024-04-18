@@ -73,6 +73,16 @@
     .view-more.active::after {
         transform: rotate(180deg);
     }
+
+    .cover-letter {
+        margin-top: 10px;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        white-space: pre-wrap; 
+    }
+
 </style>
 
 <script>
@@ -99,7 +109,6 @@
 
 <div class="container">
     <h2>Welcome, {{ current_user.username }}👋!</h2>
-   
     <p>Here are the available internships you can apply to:</p>
     <div class="row">
         {% for internship in internships %}
@@ -138,5 +147,6 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
 
