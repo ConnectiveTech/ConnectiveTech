@@ -71,14 +71,21 @@ def register():
     password = request.form.get('password')
     account_type = request.form.get('accountType')
     company_name = request.form.get('companyName') if account_type == 'company' else None
-   
+
+    # Check if username or email already exists
+    user_exists = User.query.filter((User.username == username) | (User.email == email)).first()
+    if user_exists:
+        flash('An account with this username or email already exists.', 'error')
+        return redirect(url_for('auth_views.show_register_form'))
+
     
-    new_user = User(username=username, email=email, password=password, account_type=account_type, company_name=company_name)
+    new_user = User(username=username, email=email, password=generate_password_hash(password), account_type=account_type, company_name=company_name)
     db.session.add(new_user)
     db.session.commit()
-   
-    flash('Registration successful. Please log in.')
-    return redirect(url_for('auth_views.login_action'))
+
+    flash('Registration successful. Please log in.', 'success')
+    return redirect(url_for('auth_views.login_form'))  # Redirect to the login page
+
 
 
 @auth_views.route('/dashboard', methods=['GET'])
