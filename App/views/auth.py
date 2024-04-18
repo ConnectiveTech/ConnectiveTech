@@ -84,16 +84,25 @@ def register():
 @auth_views.route('/dashboard', methods=['GET'])
 @jwt_required()
 def dashboard():
-    # Fetch internships for the logged-in user's company or available internships for students
     if current_user.account_type == 'company':
         internships = Internship.query.filter_by(company_id=current_user.id).all()
         return render_template('company_dashboard.html', internships=internships, current_user=current_user)
+
     elif current_user.account_type == 'student':
-        internships = Internship.query.filter(Internship.active == True).all() 
-        return render_template('student_dashboard.html', internships=internships, current_user=current_user)
+        internships = Internship.query.filter(Internship.active == True).all()
+        applications = Application.query.filter_by(applicant_id=current_user.id).all()
+
+        applied_internship_ids = {app.internship_id for app in applications}
+        shortlisted_ids = {app.internship_id for app in applications if app.status == 'shortlisted'}
+
+        return render_template('student_dashboard.html', internships=internships,
+                               applied_internship_ids=applied_internship_ids,
+                               shortlisted_ids=shortlisted_ids, current_user=current_user)
+
     else:
         flash('You do not have access to this page.', 'error')
         return redirect(url_for('auth_views.login_action'))
+
 
 
 
@@ -121,179 +130,6 @@ def logout_api():
     response = jsonify(message="Logged Out!")
     unset_jwt_cookies(response)
     return response
-
-
-# Students Routes
-@auth_views.route('/dashboard/student', methods=['GET'])
-@jwt_required()
-def student_dashboard():
-    internships = Internship.query.filter(Internship.active == True).all()
-    applied_internship_ids = {app.internship_id for app in current_user.applications}
-    shortlisted_ids = {app.internship_id for app in current_user.applications if app.status == 'shortlisted'}
-    return render_template('student_dashboard.html', internships=internships, shortlisted_ids=shortlisted_ids, applied_internship_ids=applied_internship_ids, current_user=current_user)
-
-
-@auth_views.route('/internships/apply/<int:internship_id>', methods=['POST'])
-@jwt_required()
-def apply_for_internship(internship_id):
-    internship = Internship.query.get_or_404(internship_id)
-    application_note = request.form.get('application_note', '')
-
-
-    existing_application = Application.query.filter_by(applicant_id=current_user.id, internship_id=internship_id).first()
-    if existing_application:
-        flash('You have already applied for this internship.', 'info')
-    else:
-        new_application = Application(
-            internship_id=internship_id,
-            applicant_id=current_user.id,
-            status='submitted',
-            cover_letter=application_note  
-        )
-        db.session.add(new_application)
-        db.session.commit()
-        flash('Application submitted successfully!', 'success')
-
-
-    return redirect(url_for('auth_views.student_dashboard'))
-
-
-
-@auth_views.route('/student/resources', methods=['GET'])
-@jwt_required()
-def student_resources():
-    return render_template('student_resources.html')
-
-
-@auth_views.route('/internships/view_applications/<int:internship_id>', methods=['GET'])
-@jwt_required()
-def view_applications(internship_id):
-    if not current_user or current_user.account_type != 'company':
-        flash("Access denied.", 'danger')
-        return redirect(url_for('auth_views.login_action'))
-   
-    internship = Internship.query.get_or_404(internship_id)
-    if internship.company_id != current_user.id:
-        flash("Unauthorized access.", 'danger')
-        return redirect(url_for('auth_views.dashboard'))
-   
-    applications = Application.query.filter_by(internship_id=internship_id).all()
-    return render_template('view_applications.html', applications=applications, internship=internship)
-
-
-@auth_views.route('/internships/<int:internship_id>/shortlist/<int:applicant_id>', methods=['POST'])
-@jwt_required()
-def shortlist_applicant(internship_id, applicant_id):
-    if current_user.account_type != 'company' or current_user.id != Internship.query.get(internship_id).company_id:
-        flash("Unauthorized access.", 'danger')
-        return redirect(url_for('auth_views.dashboard'))
-
-
-    application = Application.query.filter_by(internship_id=internship_id, applicant_id=applicant_id).first()
-    if application:
-        if application.status != 'shortlisted':  # Check if not already shortlisted
-            application.status = 'shortlisted'
-            db.session.commit()
-            flash('Applicant shortlisted successfully!', 'success')
-        else:
-            flash('Applicant is already shortlisted.', 'info')
-    else:
-        flash('Application not found.', 'error')
-
-
-    return redirect(url_for('auth_views.view_applications', internship_id=internship_id))
-
-
-@auth_views.route('/download_resume/<filename>')
-@jwt_required()
-def download_resume(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-# Company Internship Routes
-
-@auth_views.route('/internships', methods=['GET'])
-@jwt_required()
-def list_internships():
-    internships = Internship.query.filter_by(company_id=current_user.id).all()
-    return render_template('internships.html', internships=internships)
-
-@auth_views.route('/internships/create', methods=['POST'])
-@jwt_required()
-def create_internship():
-    try:
-        data = request.form
-        # Ensure required fields are present
-        if not data['title'] or not data['description']:
-            flash('Title and description are required.', 'error')
-            return redirect(url_for('auth_views.dashboard'))
-        
-        # Convert 'deadline' from string to datetime object
-        deadline = datetime.strptime(data['deadline'], '%Y-%m-%d')  
-
-        new_internship = Internship(
-            title=data['title'],
-            description=data['description'],
-            requirements=data.get('requirements', ''),
-            duration=data['duration'],
-            company_id=current_user.id,
-            location=data['location'],
-            deadline=deadline,  
-            active=data.get('active', 'True') == 'True'
-        )
-        db.session.add(new_internship)
-        db.session.commit()
-        flash('New internship created successfully!', 'success')
-    except Exception as e:
-        db.session.rollback()
-        flash(f'Failed to create internship. Error: {str(e)}', 'error')
-    
-    return redirect(url_for('auth_views.dashboard'))
-
-@auth_views.route('/internships/update/<int:internship_id>', methods=['GET', 'POST'])
-@jwt_required()
-def update_internship(internship_id):
-    internship = Internship.query.get_or_404(internship_id)
-    if request.method == 'POST':
-        try:
-            internship.title = request.form.get('title', internship.title)
-            internship.description = request.form.get('description', internship.description)
-            internship.requirements = request.form.get('requirements', internship.requirements)
-            internship.duration = request.form.get('duration', internship.duration)
-            internship.location = request.form.get('location', internship.location)
-            deadline_str = request.form.get('deadline')
-            if deadline_str:
-                try:
-                    internship.deadline = datetime.strptime(deadline_str, '%Y-%m-%d')
-                except ValueError:
-                    flash('Invalid date format. Please use YYYY-MM-DD.', 'error')
-                    return render_template('edit_internship.html', internship=internship)
-
-            internship.active = request.form.get('active', 'True') == 'True'
-            db.session.commit()
-            flash('Internship updated successfully!', 'success')
-            return redirect(url_for('auth_views.dashboard'))
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error updating internship: {str(e)}', 'error')
-            return render_template('edit_internship.html', internship=internship)
-    
-    # Pass the formatted deadline for the form
-    formatted_deadline = internship.deadline.strftime('%Y-%m-%d') if internship.deadline else ''
-    return render_template('edit_internship.html', internship=internship, formatted_deadline=formatted_deadline)
-
-
-@auth_views.route('/internships/delete/<int:internship_id>', methods=['POST'])
-@jwt_required()
-def delete_internship(internship_id):
-    internship = Internship.query.get_or_404(internship_id)
-    if internship.company_id != current_user.id:
-        flash("Unauthorized access.", 'danger')
-        return redirect(url_for('auth_views.dashboard'))
-
-    db.session.delete(internship)
-    db.session.commit()
-    flash('Internship deleted successfully!', 'success')
-    return redirect(url_for('auth_views.dashboard'))
 
 
 if __name__ == "__main__":

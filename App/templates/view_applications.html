@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block title %}View Applications{% endblock %}
+{% block page %}View Applications{% endblock %}
+
+
 {% block content %}
 <style>
     .applications-list li {
@@ -58,7 +62,7 @@
             </div>
             
             {% if application.resume_url %}
-            <a href="{{ url_for('auth_views.download_resume', filename=application.resume_url) }}" target="_blank">View Resume</a>
+            <a href="{{ url_for('student_views.download_resume', filename=application.resume_url) }}" target="_blank">View Resume</a>
             {% endif %}
             
             {% if application.cover_letter %}
@@ -68,7 +72,7 @@
             </div>
             {% endif %}
             {% if application.status != 'shortlisted' %}
-            <form action="{{ url_for('auth_views.shortlist_applicant', internship_id=internship.id, applicant_id=application.applicant.id) }}" method="post" style="display: inline;">
+            <form action="{{ url_for('student_views.shortlist_applicant', internship_id=internship.id, applicant_id=application.applicant.id) }}" method="post" style="display: inline;">
                 <button type="submit" class="shortlist-button">Shortlist</button>
             </form>
             {% else %}

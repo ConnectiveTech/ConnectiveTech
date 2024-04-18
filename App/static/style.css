@@ -289,13 +289,30 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .form-container button[type="submit"]:hover {
-  opacity: 0.8; /* Slight transparency on hover for a subtle effect */
+  opacity: 0.8;
+}
+
+/* Footer styling */
+.page-footer {
+  background-color: #000; 
+  color: #FFF; 
+  text-align: center;
+  padding: 20px 10px; 
+  margin-top: 30px; 
+  font-family: Arial, sans-serif;  
+  border-top: 3px solid #444; 
+  font-style: italic; 
+  font-weight: bold;
+}
+
+.page-footer p {
+  margin: 0;  
+  padding: 0; 
+  line-height: 1.5;  
 }
 
 
 
-
-/* Forgotten password link */
 .form-container a {
   color: #5c6bc0;
   display: inline-block;
