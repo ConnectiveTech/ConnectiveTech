@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
-{% block title %}Company Dashboard {% endblock %}
-{% block page %}Company Dashboard {% endblock %}
+{% block title %}Company Dashboard{% endblock %}
+{% block page %}Company Dashboard{% endblock %}
 
 {% block content %}
 <style>
@@ -37,7 +37,7 @@
         margin-top: 5px;
         margin-left: 5px;
         color: white;
-        background-color: #007bff;
+        background-color: black;
         border: none;
         border-radius: 5px;
         padding: 10px 15px;
@@ -53,8 +53,8 @@
     }
     @media (max-width: 768px) {
         .dashboard-content h1 {
-            font-size: 18px; /* Reduce font size for better fit on mobile screens */
-            text-align: center; /* Center align the title */
+            font-size: 18px; 
+            text-align: center; 
         }
         .dashboard-content {
             padding: 5px;
@@ -71,6 +71,45 @@
             padding: 5px;
         }
     }
+    /* Added CSS for create-internship-form */
+    .create-internship-form {
+        background-color: #fff; 
+        border: 1px solid #ccc; 
+        border-radius: 8px; 
+        padding: 20px; 
+        margin: 20px 0; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .create-internship-form h2 {
+        color: #333; 
+        font-size: 24px; 
+        margin-bottom: 15px; 
+    }
+    .create-internship-form input[type="text"],
+    .create-internship-form input[type="date"],
+    .create-internship-form select,
+    .create-internship-form textarea {
+        width: 100%; 
+        padding: 8px; 
+        margin-bottom: 10px; 
+        border: 1px solid #ccc; 
+        border-radius: 4px; 
+        box-sizing: border-box; 
+    }
+    .create-internship-form button {
+        width: 100%; 
+        padding: 10px; 
+        background-color: black; 
+        color: white; 
+        font-size: 16px; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        transition: background-color 0.3s; 
+    }
+    .create-internship-form button:hover {
+        background-color: #0056b3; 
+    }
 </style>
 
 <video autoplay muted loop id="background-video">
@@ -81,7 +120,7 @@
 <div class="dashboard">
     <section class="dashboard-content">
         <h1>Welcome, {{ current_user.company_name }}👋!</h1>
-        
+
         <!-- Form for creating new internships -->
         <div class="create-internship-form">
             <h2>Add New Internship</h2>
