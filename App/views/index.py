@@ -10,11 +10,10 @@ def index_page():
 
 @index_views.route('/init', methods=['GET']) 
 def init():
-     """Creates and initializes the database with sample data."""
+    """Creates and initializes the database with sample data."""
     db.drop_all()
     db.create_all()
-    
-    
+
     company = User(
         username='bob',
         email='bob@gmail.com',
@@ -24,7 +23,6 @@ def init():
     )
     db.session.add(company)
 
-    
     student = User(
         username='rob',
         email='rob@student.edu',
@@ -32,7 +30,7 @@ def init():
         account_type='student'
     )
     db.session.add(student)
-    
+
     # Commit the users to the database to get their ids
     db.session.commit()
 
@@ -70,11 +68,11 @@ def init():
         )
     ]
 
-    
     db.session.bulk_save_objects(internships)
     db.session.commit()
 
     return jsonify(message='db initialized!')
+
 
 @index_views.route('/health', methods=['GET'])
 def health_check():
