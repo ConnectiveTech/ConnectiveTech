@@ -2,9 +2,7 @@ from flask import Blueprint, redirect, render_template, request, send_from_direc
 from App.models import db
 from App.models import Internship,User
 from App.controllers import create_user
-from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
-from App.database import db, get_migrate
 from App.main import create_app
 from App.controllers import ( create_user, get_all_users_json, get_all_users )
 
