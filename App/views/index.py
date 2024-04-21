@@ -1,7 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.models import db
 from App.models import Internship,User
-from App.controllers import create_user
 from datetime import datetime, timedelta
 from App.main import create_app
 
