@@ -4,7 +4,6 @@ from App.models import Internship,User
 from App.controllers import create_user
 from datetime import datetime, timedelta
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users )
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
